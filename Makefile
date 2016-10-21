@@ -1,13 +1,13 @@
 CC=gcc
 CFLAGS=-g -Wall --std=c99
-INCLUDES=-I.
+INCLUDES=-I include
 LIBS=-lm
 MAIN=prog
-SRCS=ita3e.c \
-		 ita3e_sort.c \
-		 ita3e_Queue.c \
-		 ita3e_Stack.c \
-		 main.c
+SRCS=src/ita3e.c \
+		 src/ita3e_sort.c \
+		 src/ita3e_queue.c \
+		 src/ita3e_queue_test.c \
+		 src/main.c
 OBJS=$(SRCS:.c=.o)
 
 $(MAIN): $(OBJS)
@@ -17,5 +17,5 @@ $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-			rm -rf *.o
+			rm -rf src/*.o
 			rm prog
