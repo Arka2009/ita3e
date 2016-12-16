@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include "ita3e.h"
 #include "ita3e_errors.h"
@@ -17,9 +18,16 @@ uint8_t ita3e_item_compare_isLesser(ita3e_item_t a, ita3e_item_t b) {
 }
 
 void ita3e_item_print(ita3e_item_t a) {
-	printf(" {tag:%d,payload:%x} ",a.tag,a.payload);
+	printf("<tag:0x%x|payload:0x%x>",a.tag,a.payload);
 }
 
+// Array operations
+ita3e_item_t ita3e_item_init(uint8_t tag, uint16_t payload) {
+	ita3e_item_t x;
+	x.tag 		= tag;
+	x.payload = payload;
+	return x;
+}
 
 int ita3e_item_array_init(ita3e_item_t* A, int length) {
 	int i;
@@ -37,16 +45,17 @@ int ita3e_item_array_init(ita3e_item_t* A, int length) {
 
 void ita3e_item_array_print(ita3e_item_t* A, int length) {
 	int i;
-	printf("\n");
-	for(i=0; i<length; i++) {
+	printf("{");
+	for(i = 0; i < length; i++) {
 		ita3e_item_print(A[i]);
+		if(i != length -1 ) printf(",");
 	}
-	printf("\n");
+	printf("}");
 }
 
-ita3e_item_t ita3e_item_init(uint8_t tag, uint16_t payload) {
-	ita3e_item_t x;
-	x.tag 		= tag;
-	x.payload = payload;
-	return x;
-}
+//void ita3e_item_array_resize(ita3e_item_t* A, int orig_length, int new_length) {
+//
+//	for(int i = 0; i < orig_length; i++) {
+//		A[i] 
+//	}
+//} 

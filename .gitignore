@@ -35,3 +35,9 @@
 # Other logs, reports and Output
 prog
 log
+
+# Editor swap files
+*.swo
+*.swp
+*.svo
+*.svp

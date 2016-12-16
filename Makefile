@@ -7,6 +7,10 @@ SRCS=src/ita3e.c \
 		 src/ita3e_sort.c \
 		 src/ita3e_queue.c \
 		 src/ita3e_queue_test.c \
+		 src/ita3e_stack.c \
+		 src/ita3e_stack_test.c \
+		 src/ita3e_indexedseq.c \
+		 src/ita3e_indexedseq_test.c \
 		 src/main.c
 OBJS=$(SRCS:.c=.o)
 
