@@ -138,3 +138,52 @@ void ita3e_item_linked_queue_print(ita3e_item_linked_queue_t* lq) {
 	}
 	ita3e_item_array_print(sub,count);
 }
+
+// Unified Impelementation of Queues
+void ita3e_item_queue_init(ita3e_item_queue_t* q) {
+	#ifdef LINKED_Q
+		ita3e_item_linked_queue_init(q);
+	#else
+		ita3e_item_array_queue_init(q);
+	#endif
+}
+
+int ita3e_item_queue_isFull(ita3e_item_queue_t* q) {
+	#ifdef LINKED_Q
+		return ita3e_item_linked_queue_isFull(q);
+	#else
+		return ita3e_item_array_queue_isFull(q);
+	#endif
+}
+
+int ita3e_item_queue_isEmpty(ita3e_item_queue_t* q) {
+	#ifdef LINKED_Q
+		return ita3e_item_linked_queue_isEmpty(q);
+	#else
+		return ita3e_item_array_queue_isEmpty(q);
+	#endif
+}
+
+int ita3e_item_queue_enq(ita3e_item_queue_t* q, ita3e_item_t x) {
+	#ifdef LINKED_Q
+		return ita3e_item_linked_queue_enq(q,x);
+	#else
+		return ita3e_item_array_queue_enq(q,x);
+	#endif
+}
+
+int ita3e_item_queue_deq(ita3e_item_queue_t* q, ita3e_item_t* x) {
+	#ifdef LINKED_Q
+		return ita3e_item_linked_queue_deq(q,x);
+	#else
+		return ita3e_item_array_queue_deq(q,x);
+	#endif
+}
+
+void ita3e_item_queue_print(ita3e_item_queue_t* q) {
+	#ifdef LINKED_Q
+		ita3e_item_linked_queue_print(q);
+	#else
+		ita3e_item_array_queue_print(q);
+	#endif
+}

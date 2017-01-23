@@ -34,7 +34,6 @@ int ita3e_item_indexedseq_set(ita3e_item_indexedseq_t* isq, ita3e_item_t x, int 
 	return E_ITA3E_OK;
 }
 
-
 void ita3e_item_indexedseq_print(ita3e_item_indexedseq_t* isq) {
 	if(isq->size == 0) {
 		fprintf(stderr," Indexed Sequence is Empty \n");

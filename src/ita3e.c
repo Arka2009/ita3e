@@ -1,20 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <time.h>
 #include "ita3e.h"
 #include "ita3e_errors.h"
 
-uint8_t ita3e_item_compare_isEqual(ita3e_item_t a, ita3e_item_t b) {
-	return (a.tag == b.tag);	
-}
-
-uint8_t ita3e_item_compare_isGreater(ita3e_item_t a, ita3e_item_t b) {
-	return (a.tag > b.tag);
-}
-
-uint8_t ita3e_item_compare_isLesser(ita3e_item_t a, ita3e_item_t b) {
-	return (a.tag < b.tag);
+int ita3e_item_compare(ita3e_item_t a, ita3e_item_t b) {
+	if(a.tag < b.tag) return -1;
+	else if(a.tag == b.tag) return 0;
+	else return 1;
 }
 
 void ita3e_item_print(ita3e_item_t a) {
@@ -36,9 +29,8 @@ int ita3e_item_array_init(ita3e_item_t* A, int length) {
 	/* Initialize the Random Number Generator	*/
 	srand((unsigned) time(&t));
 	printf("Initializing array elements \n");
-	for(i=0; i<length; i++) {
-		A[i] = ita3e_item_init(rand()/61123452, rand()/1224694);
-	}
+	for(i=0; i<length; i++)
+		A[i] = ita3e_item_init(rand() % 256, rand() % 65536);
 	
 	return E_ITA3E_OK;
 }

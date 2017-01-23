@@ -7,6 +7,9 @@
  * Guarantees
  * 1. O(1) access (get and set)
  * 2. O(n) for Insertions/Deletions
+ * 3. Implemented as unsorted (resizing) arrays
+ * 	  so insertions and deletions have space
+ *	  complexity of O(n)
  */
 typedef struct LinearList {
 	ita3e_item_t* elements;
