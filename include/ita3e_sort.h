@@ -1,6 +1,10 @@
 #include <stdint.h>
 #include "ita3e.h"
 
+/**
+ * Sorting algorithms for an array of (comparable) elements
+ * used in many ADTs
+ */
 // Auxiliary Routines used by Sort routines
 void ita3e_item_exch(ita3e_item_t*,int,int);
 int ita3e_item_array_sorted(ita3e_item_t*, int, int);
