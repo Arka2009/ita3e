@@ -4,9 +4,9 @@
 #define G_ITA3E_0
 #define MAX_ARRAY_SIZE 100
 
-typedef enum {                                                                  
-  true  = 1,                                                                    
-  false = 0                                                                     
+typedef enum {
+  true  = 1,
+  false = 0
 } bool;
 
 // (Comparable) Tagged Satellite Type

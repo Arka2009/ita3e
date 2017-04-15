@@ -6,5 +6,5 @@
 #define E_ITA3E_OVERFLOW 								-2
 #define E_ITA3E_UNDERFLOW								-3
 #define E_ITA3E_HEAPLOW									-4 // Dynamic Memory Allocation unsuccessful
-#define E_ITA3E_OUTOFBOUND								-5 // Index Out of Bound
-#define E_ITA3E_ASSERTFAIL                              -6
+#define E_ITA3E_OUTOFBOUND								-5 // (Array) Index Out of Bound
+#define E_ITA3E_ASSERTFAIL                              -6 // Assertion failure

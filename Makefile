@@ -17,6 +17,7 @@ SRCS=src/ita3e.c \
 		 src/ita3e_sort_test.c \
 		 src/ita3e_list.c \
 		 src/ita3e_list_test.c \
+		 src/ita3e_btree.c \
 		 src/main.c
 OBJS=$(SRCS:.c=.o)
 
