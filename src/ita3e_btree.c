@@ -44,13 +44,12 @@ unsigned int ita3e_item_btree_nodes(ita3e_item_btree_t btree) {
 //			fprintf(stderr,"Cannot allocate memory for a  new tree node\n");
 //			return NULL;
 //		}
-//		new_node->data = ita3e_item_init(rand() % 0xe88,rand() % 0xafd);
 //		new_node->left  = btree_cons(ht-1);
 //		new_node->right = btree_cons(ht-1);
 //	}
 //}
 
-// Construct a balanced binary tree with a given height
+/* Construct a balanced binary tree with a given height */
 int ita3e_item_btree_cons(ita3e_item_btree_t* btree, unsigned int ht) {
 	int ls, rs;
 	
@@ -65,6 +64,7 @@ int ita3e_item_btree_cons(ita3e_item_btree_t* btree, unsigned int ht) {
 			return E_ITA3E_HEAPLOW;
 		}
 		*btree = new_node;
+		new_node->data = ita3e_item_init(rand() % 0xe88,rand() % 0xafd);
 		ls = ita3e_item_btree_cons(&(new_node->left),ht-1);
 		rs = ita3e_item_btree_cons(&(new_node->right),ht-1);
 		if((rs == E_ITA3E_OK) && (ls == E_ITA3E_OK)) {
@@ -74,4 +74,73 @@ int ita3e_item_btree_cons(ita3e_item_btree_t* btree, unsigned int ht) {
 			return E_ITA3E_HEAPLOW;
 		}
 	}
+}
+
+/* DFS traverse the tree and print it */
+int ita3e_item_btree_traverse_dfs(ita3e_item_btree_t btree, dfs_traverse_t tr) {
+	if(!btree)
+		return E_ITA3E_OK;
+
+	switch(tr) {
+		case preorder :
+			ita3e_item_print(btree->data);
+			printf(",");
+			ita3e_item_btree_traverse_dfs(btree->left,tr);
+			ita3e_item_btree_traverse_dfs(btree->right,tr);
+			break;
+
+		case inorder :
+			ita3e_item_btree_traverse_dfs(btree->left,tr);
+			ita3e_item_print(btree->data);
+			printf(",");
+			ita3e_item_btree_traverse_dfs(btree->right,tr);
+			break;
+			
+		case postorder :
+			ita3e_item_btree_traverse_dfs(btree->left,tr);
+			ita3e_item_btree_traverse_dfs(btree->right,tr);
+			ita3e_item_print(btree->data);
+			printf(",");
+			break;
+
+		default :
+			printf("Unsupported traversal type\n");	
+	}
+}
+
+/* Visualize the graph */
+static void ita3e_item_btree_print_dot_null(key_t tag, int nullcount, FILE* stream) {
+	fprintf(stream,"	null%d [shape=point];\n",nullcount);
+	fprintf(stream,"	%d -> null%d;\n",tag,nullcount);
+}
+
+static void ita3e_item_btree_print_dot_aux(ita3e_item_btree_node_t* node, FILE* stream) {
+	static int nullcount = 0;
+
+	if(node->left) {
+		fprintf(stream,"	%d -> %d;\n",(node->data).tag,(node->left->data).tag);
+		ita3e_item_btree_print_dot_aux(node->left,stream);
+	}
+	else
+		ita3e_item_btree_print_dot_null((node->data).tag,nullcount++,stream);
+	
+	if(node->right) {
+		fprintf(stream,"	%d -> %d;\n",(node->data).tag,(node->right->data).tag);
+		ita3e_item_btree_print_dot_aux(node->right,stream);
+	}
+	else
+		ita3e_item_btree_print_dot_null((node->data).tag,nullcount++,stream);
+}
+
+void ita3e_item_btree_print_dot(ita3e_item_btree_node_t* tree, FILE* stream) {
+	fprintf(stream,"digraph BTree {\n");
+	fprintf(stream,"	node [fontname=\"Arial\"];\n");
+	
+	if(!tree)
+		fprintf(stream,"\n");
+	else if (!tree->left && !tree->right)
+		fprintf(stream,"	%d;\n",(tree->data).tag);
+	else 
+		ita3e_item_btree_print_dot_aux(tree,stream);
+	fprintf(stream,"}\n");
 }

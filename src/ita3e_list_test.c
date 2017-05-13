@@ -20,5 +20,6 @@ int ita3e_list_test() {
 		printf("\n");
 	}
 	ita3e_item_list_traverse(list,true);
+	ita3e_item_list_clean_all(&list);
 	return E_ITA3E_OK;
 }

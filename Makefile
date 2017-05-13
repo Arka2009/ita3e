@@ -1,6 +1,7 @@
 CC=gcc
 CFLAGS=--std=c99
-DFLAGS=-pg -Wall -DITA3E_DEBUG
+DFLAGS=-pg -Wall -O0
+# -DITA3E_DEBUG
 FLAGS=$(CFLAGS) $(DFLAGS)
 # -gdwarf-3
 INCLUDES=-I include
@@ -18,6 +19,7 @@ SRCS=src/ita3e.c \
 		 src/ita3e_list.c \
 		 src/ita3e_list_test.c \
 		 src/ita3e_btree.c \
+		 src/ita3e_btree_test.c \
 		 src/main.c
 OBJS=$(SRCS:.c=.o)
 

@@ -9,10 +9,11 @@
    For self learning mostly
 3. Developing and verifying bounds of algorithms
    For self learning mostly
-4. This is not for production codebase, so usual software development concepts
+4. Use of analysis tools like valgrind and gdb
+5. This is not for production codebase, so usual software development concepts
    like OOP, Inheritance, generic programming etc. are strictly kept out of the discussion.
    Look at a similar Java/Scala/C++/Python implementation for such issues.
-5. The level of abstraction in other words in resticted to C, any
+6. The level of abstraction in other words in resticted to C, any
    higher level programming abstraction is avoided. The basic objective is to keep
    the abstractions as low as possible to understand how programs behave
    under the hood.

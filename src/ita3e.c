@@ -11,7 +11,7 @@ int ita3e_item_compare(ita3e_item_t a, ita3e_item_t b) {
 }
 
 void ita3e_item_print(ita3e_item_t a) {
-	printf("<tag:0x%x|payload:0x%x>",a.tag,a.payload);
+	printf("<tag:%d|payload:0x%x>",a.tag,a.payload);
 }
 
 // Array operations

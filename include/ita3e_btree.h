@@ -14,6 +14,12 @@ struct TreeNode {
 	struct TreeNode* right;
 };
 
+typedef enum {
+	preorder,
+	inorder,
+	postorder,
+} dfs_traverse_t ;
+
 typedef struct TreeNode ita3e_item_btree_node_t;
 
 //typedef struct BinaryTree {
@@ -27,6 +33,6 @@ int ita3e_item_btree_init(ita3e_item_btree_t*);
 unsigned int ita3e_item_btree_height(ita3e_item_btree_t);
 unsigned int ita3e_item_btree_nodes(ita3e_item_btree_t);
 int ita3e_item_btree_cons(ita3e_item_btree_t*, unsigned int);
-
+void ita3e_item_btree_print_dot(ita3e_item_btree_t,FILE*);
 
 #endif /* G_ITA3E_4 */

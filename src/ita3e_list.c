@@ -28,14 +28,25 @@ int ita3e_item_list_cons(ita3e_item_list_t* l, ita3e_item_t x) {
 	return E_ITA3E_OK;
 }
 
-/* returns the head of the list */
-//int ita3e_item_list_head(ita3e_item_list_t* l, ita3e_item_t* x) {
-//	if(*l == NULL) {
-//		fprintf(stderr,"Underflow");
-//		return E_ITA3E_UNDERFLOW; 
-//	}
-//	*
-//}
+/* Clean the memory allocated to list */
+int ita3e_item_list_clean_first(ita3e_item_list_t* l) {
+	if(*l == NULL)
+		return E_ITA3E_OK;
+
+	ita3e_item_list_t tmp = *l;
+	*l = (*l)->next;
+	tmp->next = NULL;
+	free(tmp);
+	return E_ITA3E_OK;
+}
+
+/* Cleanup the entire memory for the linked list */
+int ita3e_item_list_clean_all(ita3e_item_list_t* l) {
+	if(*l == NULL)
+		return E_ITA3E_OK;
+
+	ita3e_item_list_clean_all(&((*l)->next));
+}
 
 /* Print the contents of each node */
 int ita3e_item_list_traverse_aux(ita3e_item_list_t l, int depth, bool forward) {

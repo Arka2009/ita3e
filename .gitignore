@@ -41,3 +41,6 @@ log
 *.swp
 *.svo
 *.svp
+
+# Graph/tree visualization files
+*.dot
