@@ -2,29 +2,24 @@
 #include <stdlib.h>
 #include "ita3e_errors.h"
 #include "ita3e_btree.h"
+#define MAX(a,b) 	(a > b ? a : b)
 
-int ita3e_item_btree_init(ita3e_item_btree_t* btree) {
+int ita3e_item_btree_init(ita3e_item_btree_t **btree) {
 	*btree = NULL;
 	return E_ITA3E_OK;
 }
 
-static unsigned int max(unsigned int a, unsigned int b) {
-	return ((a > b) ? a : b);
-}
-
-// returns the height of the btree
-unsigned int ita3e_item_btree_height(ita3e_item_btree_t btree) {
-	if(!btree) {
+/* compute the height of btree */
+unsigned int ita3e_item_btree_height(ita3e_item_btree_t *btree) {
+	if(!btree)
 		return 0;
-	}
-	else {
-		return (1 + max(ita3e_item_btree_height(btree->left),\
+	else
+		return (1 + MAX(ita3e_item_btree_height(btree->left),\
 						ita3e_item_btree_height(btree->right)));
-	}
 }
 
-// returns the number of nodes
-unsigned int ita3e_item_btree_nodes(ita3e_item_btree_t btree) {
+/* compute the number of nodes */
+unsigned int ita3e_item_btree_nodes(ita3e_item_btree_t *btree) {
 	if(!btree) {
 		return 0;
 	}
@@ -33,24 +28,8 @@ unsigned int ita3e_item_btree_nodes(ita3e_item_btree_t btree) {
 	}
 }
 
-// constructs a balanced binary tree of height ht
-//static ita3e_item_btree_t btree_cons(unsigned int ht) {
-//	if(!ht) {
-//		return NULL;
-//	}
-//	else {
-//		ita3e_item_btree_node_t* new_node = (ita3e_item_btree_node_t*)malloc(sizeof(ita3e_item_btree_node_t));
-//		if(!new_node) {
-//			fprintf(stderr,"Cannot allocate memory for a  new tree node\n");
-//			return NULL;
-//		}
-//		new_node->left  = btree_cons(ht-1);
-//		new_node->right = btree_cons(ht-1);
-//	}
-//}
-
 /* Construct a balanced binary tree with a given height */
-int ita3e_item_btree_cons(ita3e_item_btree_t* btree, unsigned int ht) {
+int ita3e_item_btree_cons(ita3e_item_btree_t **btree, unsigned int ht) {
 	int ls, rs;
 	
 	if(!ht)	{
@@ -58,7 +37,7 @@ int ita3e_item_btree_cons(ita3e_item_btree_t* btree, unsigned int ht) {
 		return E_ITA3E_OK;
 	}
 	else {
-		ita3e_item_btree_node_t* new_node = (ita3e_item_btree_node_t*)malloc(sizeof(ita3e_item_btree_node_t));
+		struct __TreeNode *new_node = (struct __TreeNode*)malloc(sizeof(struct __TreeNode));
 		if(!new_node) {
 			fprintf(stderr,"Cannot allocate memory for a  new tree node\n");
 			return E_ITA3E_HEAPLOW;
@@ -67,45 +46,50 @@ int ita3e_item_btree_cons(ita3e_item_btree_t* btree, unsigned int ht) {
 		new_node->data = ita3e_item_init(rand() % 0xe88,rand() % 0xafd);
 		ls = ita3e_item_btree_cons(&(new_node->left),ht-1);
 		rs = ita3e_item_btree_cons(&(new_node->right),ht-1);
-		if((rs == E_ITA3E_OK) && (ls == E_ITA3E_OK)) {
+		if((rs == E_ITA3E_OK) && (ls == E_ITA3E_OK))
 			return E_ITA3E_OK;
-		}
-		else {
+		else
 			return E_ITA3E_HEAPLOW;
-		}
 	}
 }
 
 /* DFS traverse the tree and print it */
-int ita3e_item_btree_traverse_dfs(ita3e_item_btree_t btree, dfs_traverse_t tr) {
+int ita3e_item_btree_traverse_dfs(ita3e_item_btree_t *btree, dfs_traverse_t tr) {
 	if(!btree)
 		return E_ITA3E_OK;
 
 	switch(tr) {
 		case preorder :
+		{
 			ita3e_item_print(btree->data);
 			printf(",");
 			ita3e_item_btree_traverse_dfs(btree->left,tr);
 			ita3e_item_btree_traverse_dfs(btree->right,tr);
 			break;
+		}
 
 		case inorder :
+		{
 			ita3e_item_btree_traverse_dfs(btree->left,tr);
 			ita3e_item_print(btree->data);
 			printf(",");
 			ita3e_item_btree_traverse_dfs(btree->right,tr);
 			break;
+		}
 			
-		case postorder :
+		case postorder : 
+		{
 			ita3e_item_btree_traverse_dfs(btree->left,tr);
 			ita3e_item_btree_traverse_dfs(btree->right,tr);
 			ita3e_item_print(btree->data);
 			printf(",");
 			break;
+		}
 
 		default :
 			printf("Unsupported traversal type\n");	
 	}
+	return E_ITA3E_OK;
 }
 
 /* Visualize the graph */
@@ -114,7 +98,7 @@ static void ita3e_item_btree_print_dot_null(key_t tag, int nullcount, FILE* stre
 	fprintf(stream,"	%d -> null%d;\n",tag,nullcount);
 }
 
-static void ita3e_item_btree_print_dot_aux(ita3e_item_btree_node_t* node, FILE* stream) {
+static void ita3e_item_btree_print_dot_aux(struct __TreeNode *node, FILE* stream) {
 	static int nullcount = 0;
 
 	if(node->left) {
@@ -132,7 +116,7 @@ static void ita3e_item_btree_print_dot_aux(ita3e_item_btree_node_t* node, FILE* 
 		ita3e_item_btree_print_dot_null((node->data).tag,nullcount++,stream);
 }
 
-void ita3e_item_btree_print_dot(ita3e_item_btree_node_t* tree, FILE* stream) {
+void ita3e_item_btree_print_dot(ita3e_item_btree_t *tree, FILE* stream) {
 	fprintf(stream,"digraph BTree {\n");
 	fprintf(stream,"	node [fontname=\"Arial\"];\n");
 	
@@ -143,4 +127,52 @@ void ita3e_item_btree_print_dot(ita3e_item_btree_node_t* tree, FILE* stream) {
 	else 
 		ita3e_item_btree_print_dot_aux(tree,stream);
 	fprintf(stream,"}\n");
+}
+
+int ita3e_item_btree_insert(ita3e_item_btree_t **bst, key_t k) {
+	ita3e_item_btree_t *new_node;
+	if(!(*bst)) {
+		/* Base Case the bst is empty */
+		new_node = \
+		(struct __TreeNode*)malloc(sizeof(struct __TreeNode));
+	
+		if(!new_node) {
+			fprintf(stderr,"Memory Allocation failure");
+			exit(EXIT_FAILURE);
+		}
+
+		new_node->data = \
+		ita3e_item_init(k,rand() % 0xafd);
+		
+		new_node->left  = NULL;
+		new_node->right = NULL;
+
+		*bst = new_node;
+		return E_ITA3E_OK;
+	}
+	if(k < ((*bst)->data).tag) {
+		/* Insert into the left subtree */
+		ita3e_item_btree_insert(&((*bst)->left),k);
+	}
+	else if (k > ((*bst)->data).tag) { 
+		/* Insert into the right subtree */
+		ita3e_item_btree_insert(&((*bst)->right),k);
+	}
+	return E_ITA3E_OK;
+}
+
+int ita3e_item_btree_search(ita3e_item_btree_t *bst, key_t k, ita3e_item_t *x) {
+	int ret;
+	if(!bst)
+		return E_ITA3E_KEYNOTFOUND;
+	else if (bst->data.tag == k) {
+		*x = bst->data;
+		return E_ITA3E_OK;
+	}
+	else if (k < bst->data.tag)
+		ret = ita3e_item_btree_search(bst->left,k,x);
+	else
+		ret = ita3e_item_btree_search(bst->right,k,x);
+
+	return ret;
 }

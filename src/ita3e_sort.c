@@ -67,7 +67,7 @@ int ita3e_item_merge_sort(ita3e_item_t* A, int N) {
 	}
 	int lo = 0;
 	int hi = N-1;
-	ita3e_item_merge_sort1(A,aux,lo,hi);
+	ita3e_item_merge_sort_aux(A,aux,lo,hi);
 	free(aux);
 
 	if(!ita3e_item_array_sorted(A,0,N-1)) {
@@ -77,11 +77,11 @@ int ita3e_item_merge_sort(ita3e_item_t* A, int N) {
 	return E_ITA3E_OK;
 }
 
-int ita3e_item_merge_sort1(ita3e_item_t* A, ita3e_item_t* aux, int lo, int hi) {
+int ita3e_item_merge_sort_aux(ita3e_item_t* A, ita3e_item_t* aux, int lo, int hi) {
 	if(lo >= hi) return E_ITA3E_OK;
 	int mid = lo + (hi - lo)/2;
-	ita3e_item_merge_sort1(A,aux,lo,mid);
-	ita3e_item_merge_sort1(A,aux,mid+1,hi);
+	ita3e_item_merge_sort_aux(A,aux,lo,mid);
+	ita3e_item_merge_sort_aux(A,aux,mid+1,hi);
 	ita3e_item_merge_subarray(A,aux,lo,mid,hi);
 	return E_ITA3E_OK;
 }

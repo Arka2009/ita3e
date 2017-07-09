@@ -4,36 +4,50 @@
 #include "ita3e_list.h"
 #include "ita3e_errors.h"
 
-int ita3e_item_list_init(ita3e_item_list_t* l) {
+int ita3e_item_list_init(ita3e_item_list_t **l) {
 	*l = NULL; 			// An Empty list is an initialized list
 	return E_ITA3E_OK;
 }
 
-/* prepends an item, (appending is not supported) */
-int ita3e_item_list_cons(ita3e_item_list_t* l, ita3e_item_t x) {
-	ita3e_singlylinked_node_t* tmp = \
+/* construct a list of given length */
+int ita3e_item_list_cons(ita3e_item_list_t **l, unsigned int len) {
+	ita3e_singlylinked_node_t* tmp;
+
+	/* Base Case */
+	printf("value of len = %d\n",len);
+	if(!len) {
+		*l = NULL;
+		return E_ITA3E_OK;
+	}
+
+	/* Create a New Node */
+	tmp = \
 	(ita3e_singlylinked_node_t*)malloc(sizeof(ita3e_singlylinked_node_t));
 	
 	if(!tmp) {
 		fprintf(stderr,"Dynamic memory allocation failed");
-		return E_ITA3E_HEAPLOW;
+		exit(E_ITA3E_OUTOFBOUND);
 	}
+	*l 		  = tmp;
+	tmp->data = ita3e_item_init(rand()/200,rand()/0x4de);
+	tmp->next = NULL;
+	
+	ita3e_item_list_cons(&((*l)->next), --len);
+
 	#ifdef ITA3E_DEBUG
 	printf("List Before Push : ");
 	ita3e_item_list_traverse(*l, true);
 	#endif
-	tmp->data = x;
-	tmp->next = *l;
-	*l = tmp;
+
 	return E_ITA3E_OK;
 }
 
 /* Clean the memory allocated to list */
-int ita3e_item_list_clean_first(ita3e_item_list_t* l) {
+int ita3e_item_list_clean_first(ita3e_item_list_t **l) {
 	if(*l == NULL)
 		return E_ITA3E_OK;
 
-	ita3e_item_list_t tmp = *l;
+	ita3e_item_list_t *tmp = *l;
 	*l = (*l)->next;
 	tmp->next = NULL;
 	free(tmp);
@@ -41,15 +55,17 @@ int ita3e_item_list_clean_first(ita3e_item_list_t* l) {
 }
 
 /* Cleanup the entire memory for the linked list */
-int ita3e_item_list_clean_all(ita3e_item_list_t* l) {
+int ita3e_item_list_clean_all(ita3e_item_list_t **l) {
+	int ret;
 	if(*l == NULL)
 		return E_ITA3E_OK;
 
-	ita3e_item_list_clean_all(&((*l)->next));
+	ret = ita3e_item_list_clean_all(&((*l)->next));
+	return ret;
 }
 
 /* Print the contents of each node */
-int ita3e_item_list_traverse_aux(ita3e_item_list_t l, int depth, bool forward) {
+int ita3e_item_list_traverse_aux(ita3e_item_list_t *l, int depth, bool forward) {
 	if(l == NULL) {
 		if(depth == 0)
 			printf("List is empty\n");
@@ -73,6 +89,75 @@ int ita3e_item_list_traverse_aux(ita3e_item_list_t l, int depth, bool forward) {
 	return E_ITA3E_OK;
 }
 
-int ita3e_item_list_traverse(ita3e_item_list_t l, bool forward) {
+int ita3e_item_list_insert_aux(ita3e_item_list_t **l,key_t k,unsigned int pos) {
+	ita3e_singlylinked_node_t *tmp;
+	if(!pos) {
+		/* Insert at the beginning */
+		tmp = \
+		(ita3e_singlylinked_node_t*)malloc(sizeof(ita3e_singlylinked_node_t));
+
+		if(!tmp) {
+			fprintf(stderr,"Memory allocation failed\n");
+			exit(E_ITA3E_OUTOFBOUND);
+		}
+
+		tmp->data = ita3e_item_init(k,rand() % 0x4edf);
+		tmp->next = *l;
+		*l		  = tmp;
+
+		return E_ITA3E_OK;
+	}
+	if (*l)
+		ita3e_item_list_insert_aux(&((*l)->next),k,--pos);
+	else {
+		fprintf(stderr,"Index out of bound\n");
+		exit(E_ITA3E_OUTOFBOUND);
+	}
+	return E_ITA3E_OK;
+}
+
+int ita3e_item_list_insert(ita3e_item_list_t **l,key_t k,unsigned int pos) {
+	return ita3e_item_list_insert_aux(l,k,pos);
+}
+
+int ita3e_item_list_delete(ita3e_item_list_t **l, unsigned int pos) {
+	ita3e_singlylinked_node_t *tmp;
+	if(!pos) {
+		if(!(*l)) {
+			fprintf(stderr,"list is empty\n");
+			exit(E_ITA3E_UNDERFLOW);
+		}
+		else {
+			tmp = *l;
+			*l  = tmp->next;
+			free(tmp);
+		}
+		return E_ITA3E_OK;
+	}
+	if (*l)
+		ita3e_item_list_delete(&((*l)->next),--pos);
+	else {
+		fprintf(stderr,"Index out of bound\n");
+		exit(E_ITA3E_OUTOFBOUND);
+	}
+	return E_ITA3E_OK;
+}
+
+int ita3e_item_list_search(ita3e_item_list_t *l, key_t k, ita3e_item_t *x) {
+	int rc = E_ITA3E_OK;
+
+	if(!l)
+		return E_ITA3E_KEYNOTFOUND;
+	else if(l->data.tag == k) {
+		*x = l->data;
+		return E_ITA3E_OK;
+	}
+	else
+		rc = ita3e_item_list_search(l->next,k,x);
+
+	return rc;
+}
+
+int ita3e_item_list_traverse(ita3e_item_list_t *l, bool forward) {
 	return ita3e_item_list_traverse_aux(l,0,forward);
 }
