@@ -24,7 +24,7 @@ typedef enum {
 int 			ita3e_item_btree_init(ita3e_item_btree_t **bt);
 unsigned int 	ita3e_item_btree_height(ita3e_item_btree_t *bt); /* Compute the height */
 unsigned int 	ita3e_item_btree_nodes(ita3e_item_btree_t *bt);  /* Count the number of nodes */
-int 			ita3e_item_btree_cons(ita3e_item_btree_t **bt, unsigned int); /* Construct a (non-search) tree with a given height */
+int 			ita3e_item_btree_cons(ita3e_item_btree_t **bt, unsigned int); /* Construct a (non-search) btree with a given height */
 void 			ita3e_item_btree_print_dot(ita3e_item_btree_t *bt,FILE*);	  /* Visualize the tree using xdot */
 int				ita3e_item_btree_traverse_dfs(ita3e_item_btree_t*, dfs_traverse_t);
 

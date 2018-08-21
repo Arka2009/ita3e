@@ -91,6 +91,8 @@ int ita3e_item_list_traverse_aux(ita3e_item_list_t *l, int depth, bool forward) 
 
 int ita3e_item_list_insert_aux(ita3e_item_list_t **l,key_t k,unsigned int pos) {
 	ita3e_singlylinked_node_t *tmp;
+	//static key_t vertex_id = 0;
+
 	if(!pos) {
 		/* Insert at the beginning */
 		tmp = \
@@ -101,9 +103,10 @@ int ita3e_item_list_insert_aux(ita3e_item_list_t **l,key_t k,unsigned int pos) {
 			exit(E_ITA3E_OUTOFBOUND);
 		}
 
-		tmp->data = ita3e_item_init(k,rand() % 0x4edf);
-		tmp->next = *l;
-		*l		  = tmp;
+		tmp->data 		= ita3e_item_init(k,rand() % 0x4edf);
+		tmp->next 		= *l;
+		tmp->vertex_id 	= k;//vertex_id++;
+		*l		  		= tmp;
 
 		return E_ITA3E_OK;
 	}

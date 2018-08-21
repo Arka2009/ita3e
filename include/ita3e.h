@@ -21,6 +21,10 @@ typedef struct ItemType {
 typedef struct NodeType0 {
 	ita3e_item_t data;
 	struct NodeType0* next;
+
+	/* The following are used in adjacency list and other graph structures */
+	bool visited;
+	key_t vertex_id;		// This may be redundant
 } ita3e_singlylinked_node_t ;
 
 typedef struct NodeType1 {
