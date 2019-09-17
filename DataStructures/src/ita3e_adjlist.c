@@ -17,7 +17,7 @@ int ita3e_item_adjlist_cons0(ita3e_item_adjlist_t *g, int num_vertices) {
 	}
 
 	/* Iterate over the number of nodes and fill the values */
-	key_t i = 0;
+	key2_t i = 0;
 	for(i = 0; i < num_vertices; i++) {
 		g->vertex_array[i].visited 	 = false;
 		g->vertex_array[i].vertex_id = i;
@@ -27,7 +27,7 @@ int ita3e_item_adjlist_cons0(ita3e_item_adjlist_t *g, int num_vertices) {
 }
 
 /* Connect node-u and node-v */
-int ita3e_item_adjlist_connect(ita3e_item_adjlist_t *g, key_t u, key_t v) {
+int ita3e_item_adjlist_connect(ita3e_item_adjlist_t *g, key2_t u, key2_t v) {
 
 	/* Do a bounds check of u and v */
 	if((u >= g->num_vertices)  || (v >= g->num_vertices)) {
@@ -42,12 +42,12 @@ int ita3e_item_adjlist_connect(ita3e_item_adjlist_t *g, key_t u, key_t v) {
 }
 
 /* Visualize the graph */
-//static void print_dot_null(key_t tag, int nullcount, FILE* stream) {
+//static void print_dot_null(key2_t tag, int nullcount, FILE* stream) {
 //    fprintf(stream,"    null%d [shape=point];\n",nullcount);
 //    fprintf(stream,"    %d -> null%d;\n",tag,nullcount);
 //}
 
-static explore(ita3e_item_adjlist_t *g, key_t u) {
+static explore(ita3e_item_adjlist_t *g, key2_t u) {
 	g->vertex_array[u].visited = true;
 
 	/* traverse the list pointed to by v */

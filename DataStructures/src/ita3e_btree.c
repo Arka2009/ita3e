@@ -93,7 +93,7 @@ int ita3e_item_btree_traverse_dfs(ita3e_item_btree_t *btree, dfs_traverse_t tr) 
 }
 
 /* Visualize the graph */
-static void ita3e_item_btree_print_dot_null(key_t tag, int nullcount, FILE* stream) {
+static void ita3e_item_btree_print_dot_null(key2_t tag, int nullcount, FILE* stream) {
 	fprintf(stream,"	null%d [shape=point];\n",nullcount);
 	fprintf(stream,"	%d -> null%d;\n",tag,nullcount);
 }
@@ -129,7 +129,7 @@ void ita3e_item_btree_print_dot(ita3e_item_btree_t *tree, FILE* stream) {
 	fprintf(stream,"}\n");
 }
 
-int ita3e_item_btree_insert(ita3e_item_btree_t **bst, key_t k) {
+int ita3e_item_btree_insert(ita3e_item_btree_t **bst, key2_t k) {
 	ita3e_item_btree_t *new_node;
 	if(!(*bst)) {
 		/* Base Case the bst is empty */
@@ -161,7 +161,7 @@ int ita3e_item_btree_insert(ita3e_item_btree_t **bst, key_t k) {
 	return E_ITA3E_OK;
 }
 
-int ita3e_item_btree_search(ita3e_item_btree_t *bst, key_t k, ita3e_item_t *x) {
+int ita3e_item_btree_search(ita3e_item_btree_t *bst, key2_t k, ita3e_item_t *x) {
 	int ret;
 	if(!bst)
 		return E_ITA3E_KEYNOTFOUND;

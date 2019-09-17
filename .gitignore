@@ -41,6 +41,22 @@ log
 *.swp
 *.svo
 *.svp
+/.vscode/
 
 # Graph/tree visualization files
 *.dot
+
+# Profile CSV datasets
+*.csv
+
+# Build Products
+/build/
+
+# Dump Datasets
+
+# Graphviz visualizations
+*.dot
+*.pdf
+*.svg
+*.png
+*.jpeg

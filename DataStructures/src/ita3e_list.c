@@ -89,7 +89,7 @@ int ita3e_item_list_traverse_aux(ita3e_item_list_t *l, int depth, bool forward) 
 	return E_ITA3E_OK;
 }
 
-int ita3e_item_list_insert_aux(ita3e_item_list_t **l,key_t k,unsigned int pos) {
+int ita3e_item_list_insert_aux(ita3e_item_list_t **l,key2_t k,unsigned int pos) {
 	ita3e_singlylinked_node_t *tmp;
 	//static key_t vertex_id = 0;
 
@@ -119,7 +119,7 @@ int ita3e_item_list_insert_aux(ita3e_item_list_t **l,key_t k,unsigned int pos) {
 	return E_ITA3E_OK;
 }
 
-int ita3e_item_list_insert(ita3e_item_list_t **l,key_t k,unsigned int pos) {
+int ita3e_item_list_insert(ita3e_item_list_t **l,key2_t k,unsigned int pos) {
 	return ita3e_item_list_insert_aux(l,k,pos);
 }
 
@@ -146,7 +146,7 @@ int ita3e_item_list_delete(ita3e_item_list_t **l, unsigned int pos) {
 	return E_ITA3E_OK;
 }
 
-int ita3e_item_list_search(ita3e_item_list_t *l, key_t k, ita3e_item_t *x) {
+int ita3e_item_list_search(ita3e_item_list_t *l, key2_t k, ita3e_item_t *x) {
 	int rc = E_ITA3E_OK;
 
 	if(!l)

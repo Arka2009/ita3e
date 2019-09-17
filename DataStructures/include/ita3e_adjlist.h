@@ -24,7 +24,7 @@ int ita3e_item_adjlist_cons(ita3e_item_adjlist_t *g, char **dot_file);
 int ita3e_item_adjlist_cons0(ita3e_item_adjlist_t *g, int num_vertices);
 
 /* Connect node-u and node-v */
-int ita3e_item_adjlist_connect(ita3e_item_adjlist_t *g, key_t u, key_t v);
+int ita3e_item_adjlist_connect(ita3e_item_adjlist_t *g, key2_t u, key2_t v);
 
 /* Print the dot file */
 int ita3e_item_adjlist_print_dot(const ita3e_item_adjlist_t *g, FILE *stream);

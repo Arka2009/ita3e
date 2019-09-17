@@ -6,7 +6,7 @@
 
 int ita3e_btree_test() {
 	int ht = 3, num_nodes = 10;
-	key_t k = rand() % 1000;
+	key2_t k = rand() % 1000;
 	ita3e_item_btree_t *btree = NULL;
 	ita3e_item_t x;
 	int ret;

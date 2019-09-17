@@ -1,19 +1,15 @@
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifndef G_ITA3E_0
 #define G_ITA3E_0
 #define MAX_ARRAY_SIZE 100
 
-typedef enum {
-  true  = 1,
-  false = 0
-} bool;
-
 // (Comparable) Tagged Satellite Type
-typedef uint16_t key_t;
+typedef uint16_t key2_t;
 
 typedef struct ItemType {
-	key_t tag;
+	key2_t tag;
 	uint32_t payload;
 } ita3e_item_t ;
 
@@ -24,7 +20,7 @@ typedef struct NodeType0 {
 
 	/* The following are used in adjacency list and other graph structures */
 	bool visited;
-	key_t vertex_id;		// This may be redundant
+	key2_t vertex_id;		// This may be redundant
 } ita3e_singlylinked_node_t ;
 
 typedef struct NodeType1 {

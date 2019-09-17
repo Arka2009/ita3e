@@ -29,8 +29,8 @@ void 			ita3e_item_btree_print_dot(ita3e_item_btree_t *bt,FILE*);	  /* Visualize
 int				ita3e_item_btree_traverse_dfs(ita3e_item_btree_t*, dfs_traverse_t);
 
 /* Methods Exclusive to a search tree */
-int				ita3e_item_btree_search(ita3e_item_btree_t *bt, key_t k, ita3e_item_t *x);
-int				ita3e_item_btree_insert(ita3e_item_btree_t **bt, key_t);
+int				ita3e_item_btree_search(ita3e_item_btree_t *bt, key2_t k, ita3e_item_t *x);
+int				ita3e_item_btree_insert(ita3e_item_btree_t **bt, key2_t);
 //int			ita3e_item_btree_delete(ita3e_item_btree_t **bt, ita3e_item_t *x); /* Quite Tricky */
 
 #endif /* G_ITA3E_4 */
