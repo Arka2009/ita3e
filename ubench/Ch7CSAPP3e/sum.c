@@ -1,0 +1,12 @@
+#include "sum.h"
+
+
+
+int sum(int *a, int n) {
+    int array[2] = {22,45};
+    int i, s = 0;
+    for (i = 0; i < n; i++) {
+        s += a[i];
+    }
+    return s;
+}
